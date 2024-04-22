@@ -6,13 +6,22 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct CharacterCell: View {
+    var character: CharacterData
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            KFImage(URL(string: character.image))
+                .resizable()
+                .frame(width: 50, height: 50)
+                .padding()
+            Text(character.name)
+        }
     }
 }
 
 #Preview {
-    CharacterCell()
+    CharacterCell(character: CharacterData(name: "Juan", status: .alive, species: "hola", type: "adios", gender: .female, location: LocationDTO(name: "", url: ""), image: "https://www.tiendapadelpoint.com/pala-siux-fenix-pro-4-2024-1?search=siux", episode: []))
 }

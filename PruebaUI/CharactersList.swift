@@ -8,15 +8,28 @@
 import SwiftUI
 
 struct CharactersList: View {
+    @StateObject var viewModel = CharactersListViewModel(api: ApiRequest())
+    @State private var myPage = 1
+    private var totalPages = 0
+    var charactersList: [CharacterData] = []
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        List(viewModel.charactersDataList?.characterList ?? [], id: \.name) { character in
+            CharacterCell(character: character)//cambiar !
+                .onAppear() {
+                    if viewModel.charactersDataList?.characterList.last?.name == character.name && viewModel.charactersDataList?.pages != myPage {
+                        myPage += 1
+                        viewModel.loadCharacterList(page: myPage, characterList: viewModel.charactersDataList!.characterList)
+                    }
+                }
         }
-        .padding()
+        
+        .onAppear {
+            viewModel.loadCharacterList(page: myPage, characterList: [])
+            self.myPage = myPage + 1
+        }
     }
+    
 }
 
 #Preview {

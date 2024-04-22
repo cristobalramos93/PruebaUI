@@ -7,7 +7,25 @@
 		<key>PruebaUI.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>7</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>8F3B0F9D2BD5DC4D008D4549</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8F3B0FAD2BD5DC4F008D4549</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8F3B0FB72BD5DC4F008D4549</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

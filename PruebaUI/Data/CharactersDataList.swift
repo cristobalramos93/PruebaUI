@@ -8,6 +8,6 @@
 import Foundation
 
 struct CharactersDataList {
-    let characterList: [CharacterData]
-    let pages: Int
+    var characterList: [CharacterData]
+    var pages: Int
 }

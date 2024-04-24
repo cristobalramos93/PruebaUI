@@ -8,6 +8,7 @@
 import Foundation
 
 struct CharacterData {
+    let id: Int
     let name: String
     let status: StatusDTO
     let species: String

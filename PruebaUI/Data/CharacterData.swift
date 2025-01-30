@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CharacterData {
+struct CharacterData: Codable {
     let id: Int
     let name: String
     let status: StatusDTO

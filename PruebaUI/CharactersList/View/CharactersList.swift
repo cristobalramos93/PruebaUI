@@ -13,22 +13,18 @@ struct CharactersList: View {
     
     var body: some View {
         VStack {
-            // Vista de carga y éxito
             if viewModel.state == .loading || viewModel.state == .success {
                 successView
             }
-            // Vista de error
             else if viewModel.state == .error {
                 errorView
             }
-            
         }
         .onAppear {
             loadCharacters()
         }
     }
     
-    // Vista de carga y éxito
     private var successView: some View {
         ZStack {
             characterListView
@@ -39,27 +35,24 @@ struct CharactersList: View {
         }
     }
     
-    // Vista de éxito
     private var characterListView: some View {
-        NavigationView {
-            List(viewModel.charactersDataList.characterList, id: \.id) { character in
+        NavigationStack {
+            List(viewModel.filteredCharacters, id: \.id) { character in
                 NavigationLink(destination: CharacterDetailView(character: character)) {
                     CharacterCell(character: character)
-                        .onAppear() {
-                            if viewModel.charactersDataList.characterList.last?.name == character.name && viewModel.charactersDataList.pages != myPage {
+                        .onAppear {
+                            if viewModel.charactersDataList.characterList.last?.name == character.name &&
+                                viewModel.charactersDataList.pages != myPage {
                                 loadCharacters()
                             }
                         }
                 }
             }
-            //.listStyle(.plain)
             .navigationTitle("Personajes")
+            .searchable(text: $viewModel.searchText, prompt: "Buscar personaje...")
         }
-
     }
-    
-    
-    // Vista de error
+        
     private var errorView: some View {
         VStack {
             Spacer()
@@ -79,8 +72,8 @@ struct CharactersList: View {
         }
     }
     
-    // Función para volver a cargar personajes
     private func loadCharacters() {
+        guard myPage < viewModel.charactersDataList.pages else { return }
         myPage += 1
         viewModel.loadCharacterList(page: myPage)
     }

@@ -7,7 +7,12 @@
 
 import Foundation
 
-struct CharactersDataList {
+class CharactersDataList: Codable {
     var characterList: [CharacterData]
     var pages: Int
+    
+    init(characterList: [CharacterData], pages: Int) {
+        self.characterList = characterList
+        self.pages = pages
+    }
 }

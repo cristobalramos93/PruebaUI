@@ -20,7 +20,8 @@ class CharactersListViewModel: ObservableObject {
     var cancellable = Set<AnyCancellable>()
     @Published var charactersDataList = CharactersDataList(characterList: [], pages: 10)
     @Published var state: ViewState = .loading
-    
+    @Published var searchText: String = ""
+
     init(api: ApiRequest) {
         self.api = api
     }
@@ -31,14 +32,28 @@ class CharactersListViewModel: ObservableObject {
             .sink(receiveCompletion: { result in
                 switch result {
                 case .failure:
-                    self.state = .error
+                    DispatchQueue.main.async {
+                        self.state = .error
+                    }
                 case .finished:
                     break
                 }
             }, receiveValue: { data in
-                self.state = .success
-                self.charactersDataList.characterList.append(contentsOf: data.characterList)
-                self.charactersDataList.pages = data.pages
+                DispatchQueue.main.async {
+                    self.state = .success
+                    self.charactersDataList.characterList.append(contentsOf: data.characterList)
+                    self.charactersDataList.pages = data.pages
+                }
             }).store(in: &cancellable)
+    }
+    
+    var filteredCharacters: [CharacterData] {
+        if searchText.isEmpty {
+            return charactersDataList.characterList
+        } else {
+            return charactersDataList.characterList.filter {
+                $0.name.localizedCaseInsensitiveContains(searchText)
+            }
+        }
     }
 }

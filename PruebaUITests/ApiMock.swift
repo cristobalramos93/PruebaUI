@@ -21,7 +21,6 @@ class ApiMock: ApiRequest {
         Future<CharactersDataList, Error> { promise in
             var pages = 0
             var charactersList: [CharacterData] = []
-            let decoder = JSONDecoder()
             let testBundle = Bundle(for: type(of: self))
             if let fileURL = testBundle.url(forResource: self.json, withExtension: "json") {
                 do {
